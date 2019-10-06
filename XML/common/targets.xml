@@ -1,0 +1,162 @@
+<!-- targets.xml: Referenced by the build.xml files, this file
+     contains targets common to all of the jaxrpc examples.  -->
+
+  <taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask" />
+  <taskdef name="install" classname="org.apache.catalina.ant.InstallTask" />
+  <taskdef name="remove" classname="org.apache.catalina.ant.RemoveTask" />
+  <taskdef name="list" classname="org.apache.catalina.ant.ListTask" />
+
+  <target name="prepare" 
+     description="Creates the build and dist directories" >
+     <echo message="Creating the required directories...." />
+     <mkdir dir="${build}/client/${example}" />
+     <mkdir dir="${build}/server/${example}" />
+     <mkdir dir="${build}/shared/${example}" />
+     <mkdir dir="dist" />
+  </target>
+
+  <target name="compile-server" depends="prepare"
+      description="Compiles the server-side source code">
+      <echo message="Compiling the server-side source code...."/>
+      <javac
+         srcdir="."
+         destdir="${build}/shared"
+         includes="*.java"
+         excludes="*Client.java"
+      />
+  </target>
+
+  <target name="xrpcc-server" depends="compile-server"
+      description="Runs the xrpcc tool for the server.  UNIX users: Before running this target you must edit script-suffix in ../common/build.properties.">
+      <echo message="Running xrpcc for the server:"/>
+      <exec executable="${xrpcc}">
+         <arg line="-classpath ${build}/shared" />
+         <arg line="-server" />
+         <arg line="-d ${build}/server" />
+         <arg line="config.xml" />
+      </exec>
+  </target>
+
+  <target name="xrpcc-client" depends="compile-server"
+      description="Runs the xrpcc tool for the client.  UNIX users: Before running this target you must edit script-suffix in ../common/build.properties.">
+      <echo message="Running xrpcc for the client:"/>
+      <exec executable="${xrpcc}">
+         <arg line="-classpath ${build}/shared" />
+         <arg line="-client" />
+         <arg line="-d ${build}/client" />
+         <arg line="config.xml" />
+      </exec>
+  </target>
+
+  <target name="compile-client" depends="xrpcc-client"
+      description="Compiles the client-side source code"  >
+      <echo message="Compiling the client source code...."/>
+      <javac
+         srcdir="."
+         destdir="${build}/client"
+         classpath="${jwsdp-jars}:build/shared:build/client"
+         includes="*Client.java"
+      />
+  </target>
+
+  <target name="jar-client" depends="compile-client"
+      description="Builds the JAR file that contains the client">
+      <echo message="Building the client JAR  file...."/>
+      <delete file="dist/${client-jar}" />
+      <jar jarfile="dist/${client-jar}" >
+        <fileset dir="${build}/client" />
+        <fileset dir="${build}/shared" /> 
+      </jar>
+  </target>
+
+  <target name="package" 
+      description="Packages the WAR file">
+      <echo message="Packaging the WAR...."/>
+      <delete file="dist/${war-file}" />
+      <jar jarfile="dist/${war-file}" >
+        <fileset dir="${build}" includes="WEB-INF/**" />
+      </jar>
+  </target>
+
+  <target name="setup-web-inf"
+     description="Copies files to build/WEB-INF">
+     <echo message="Setting up ${build}/WEB-INF...."/>
+     <delete dir="${build}/WEB-INF" />
+     <mkdir dir="${build}/WEB-INF/classes/${example}" />
+     <copy todir="${build}/WEB-INF/classes/${example}">
+         <fileset dir="${build}/shared/${example}" />
+         <fileset dir="${build}/server/${example}" />
+     </copy>
+     <copy file="web.xml" todir="${build}/WEB-INF" />
+     <copy file="${build}/server/${web-inf-config}" todir="${build}/WEB-INF" />
+  </target>
+
+  <target name="install" depends="setup-web-inf"
+     description="Installs a Web application">
+     <echo message="Installing the application...."/>
+     <install
+        url="${url}" 
+        username="${username}" 
+        password="${password}" 
+        path="/${context-path}" 
+        war="file:${build-path}"    
+      />
+  </target>
+
+  <target name="list" 
+     description="Lists a Web application">
+     <echo message="Listing the application...."/>
+     <list
+        url="${url}" 
+        username="${username}" 
+        password="${password}" 
+      />
+  </target>
+
+  <target name="remove" 
+     description="Removes a Web application">
+     <echo message="Removing the application...."/>
+     <remove
+        url="${url}" 
+        username="${username}" 
+        password="${password}" 
+        path="/${context-path}" 
+      />
+  </target>
+
+
+  <target name="reload" depends="setup-web-inf"
+     description="Reloads a Web application">
+     <echo message="Reloading the application...."/>
+     <reload
+        url="${url}" 
+        username="${username}" 
+        password="${password}" 
+        path="/${context-path}" 
+      />
+  </target>
+
+  <target name="run" 
+     description="Runs the example client">
+     <echo message="Running the ${client-class} program:" />
+     <echo message="java -classpath dist/${client-jar}:${jwsdp-jars} ${client-class} ${endpoint}" />
+     <echo message=" " />
+      <java 
+            fork="on" 
+            classpath="dist/${client-jar}:${jwsdp-jars}:${jaxp-jars}" 
+            classname="${client-class}" >
+           <arg value="${endpoint}" />
+      </java>
+  </target>
+
+  <target name="build" depends="clean,jar-client,xrpcc-server"
+     description="Executes the targets needed to build this example.">
+  </target>
+
+  <target name="clean" 
+     description="Removes the build and dist directories">
+    <delete dir="${build}" />
+    <delete dir="dist" />
+  </target>
+
+

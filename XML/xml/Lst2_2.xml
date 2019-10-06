@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE EMAIL [
+  <!ELEMENT EMAIL (TO, FROM, CC, SUBJECT, BODY)>
+  <!ELEMENT TO (#PCDATA)>
+
+  <!ELEMENT FROM (#PCDATA)>
+  <!ELEMENT CC (#PCDATA)>
+  <!ELEMENT SUBJECT (#PCDATA)>
+  <!ELEMENT BODY (#PCDATA)>
+]>
+
+<EMAIL>
+  <TO>Jodie@msn.com</TO>
+  <FROM>Bill@msn.com</FROM>
+  <CC>Philip@msn.com</CC>
+  <SUBJECT>My First DTD</SUBJECT>
+  <BODY>Hello, World!</BODY>
+</EMAIL>

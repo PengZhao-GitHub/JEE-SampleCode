@@ -1,0 +1,4 @@
+<!ELEMENT priceList (coffee)+>
+<!ELEMENT coffee (name, price) >
+<!ELEMENT name (#PCDATA) >
+<!ELEMENT price (#PCDATA) >

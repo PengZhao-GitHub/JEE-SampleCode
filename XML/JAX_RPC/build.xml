@@ -1,0 +1,12 @@
+<!DOCTYPE project [
+  <!ENTITY commonTargets SYSTEM "../common/targets.xml">
+]>
+
+<project name="JAX-RPC Tutorial" default="build" basedir=".">
+
+  <property file="../common/build.properties"/>
+  <property file="build.properties"/>
+
+  &commonTargets; <!-- The ant targets are in ../common/targets.xml -->
+
+</project>

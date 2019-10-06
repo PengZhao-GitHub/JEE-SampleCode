@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+
+  <HEAD>
+    <SCRIPT LANGUAGE="JavaScript" FOR=window EVENT=onload>
+      loadDoc();
+    </SCRIPT>
+
+    <SCRIPT LANGUAGE="JavaScript">
+      var rootElem;
+      var xmlDoc = new ActiveXObject("microsoft.xmldom");
+      xmlDoc.load("Lst2_2.xml");
+
+      function loadDoc()
+        {
+        if (xmlDoc.readyState == "4")
+          start();
+        else
+          window.setTimeout("loadDoc()", 4000)
+        }
+
+      function start()
+        {
+        rootElem = xmlDoc.documentElement;
+        todata.innerText = rootElem.childNodes.item(0).text;
+        fromdata.innerText=rootElem.childNodes.item(1).text;
+        ccdata.innerText=rootElem.childNodes.item(2).text;
+        subjectdata.innerText=rootElem.childNodes.item(3).text;
+        bodydata.innerText=rootElem.childNodes.item(4).text;
+        }
+    </SCRIPT>
+
+    <TITLE>Code Listing 2-2</TITLE>
+  </HEAD>
+
+  <BODY>
+    <DIV ID="to" STYLE="font-weight:bold;font-size:16">
+      To:
+      <SPAN ID="todata" STYLE="font-weight:normal"></SPAN>
+    </DIV>
+    <BR>
+
+    <DIV ID="from" STYLE="font-weight:bold;font-size:16">
+      From:
+      <SPAN ID="fromdata" STYLE="font-weight:normal"></SPAN>
+    </DIV>
+    <BR>
+
+    <DIV ID="cc" STYLE="font-weight:bold;font-size:16">
+      Cc:
+      <SPAN ID="ccdata" STYLE="font-weight:normal"></SPAN>
+    </DIV>
+    <BR>
+
+    <DIV ID="subject" STYLE="font-weight:bold;font-size:16">
+      Subject:
+      <SPAN ID="subjectdata" STYLE="font-weight:normal"></SPAN>
+    </DIV>
+    <BR>
+
+    <HR>
+    <SPAN ID="bodydata" STYLE="font-weight:normal"></SPAN>
+  </BODY>
+
+</HTML>
+

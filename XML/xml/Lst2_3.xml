@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE EMAIL SYSTEM "Lst2_3.dtd">
+
+<EMAIL LANGUAGE="Western" ENCRYPTED="128" PRIORITY="HIGH">
+  <TO>Jodie@msn.com</TO>
+  <FROM>&SIGNATURE;@msn.com</FROM>
+  <CC>Philip@msn.com</CC>
+  <SUBJECT>Sample Document with External DTD</SUBJECT>
+
+  <BODY>
+    Hello, this is &SIGNATURE;.
+    Take care, -&SIGNATURE;
+  </BODY>
+</EMAIL>
+

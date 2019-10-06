@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration
+   xmlns="http://java.sun.com/jax-rpc-ri/xrpcc-config">
+   <rmi name="HelloWorldService"
+      targetNamespace="http://hello.org/wsdl"
+      typeNamespace="http://hello.org/types">
+      <service name="HelloWorld" packageName="hello">
+      <interface name="hello.HelloIF"
+         servantName="hello.HelloImpl"/>
+      </service>
+   </rmi>
+</configuration>
+
