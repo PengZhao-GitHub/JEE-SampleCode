@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+
+<taglib>
+	<tlibversion>1.0</tlibversion>
+	<jspversion>1.1</jspversion>
+	<shortname>csajsp</shortname>
+	<info>
+		A tag library from Core Servlets and JavaServer Pages,
+	</info>
+
+	<!-- Other tags defined earlier... -->
+	<tag>
+		<name>prime</name>
+		<tagclass>coreservlets.tags.PrimeTag</tagclass>
+		<info>attribute test</info>
+		<bodycontent>EMPTY</bodycontent>
+		<attribute>
+			<name>length</name>
+			<required>false</required>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>heading</name>
+		<tagclass>coreservlets.tags.HeadingTag</tagclass>
+		<info>body test</info>
+		<bodycontent>JSP</bodycontent>
+		<attribute>
+			<name>bgColor</name>
+			<required>true</required> <!-- bgColor is required -->
+		</attribute>
+		<attribute>
+			<name>color</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>align</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>fontSize</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>fontList</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>border</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>filter</name>
+		<tagclass>coreservlets.tags.FilterTag</tagclass>
+		<info>Replaces HTML-specific characters in body.</info>
+		<bodycontent>JSP</bodycontent>
+	</tag>
+
+</taglib>
