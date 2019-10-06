@@ -1,0 +1,66 @@
+<project name="MyEJBStudy" default="about" basedir=".">
+			
+			<target name="init">
+			<tstamp/>
+			<property name="build" value="./build" />
+			<property name="ejb" value="./" />
+			<property environment="myenv" />
+			<property name="j2eepath"  value="${myenv.J2EE_HOME}/lib/j2ee.jar" />
+			<property name="webpath" value="${webejb}" />
+			<property name="connector-lib" value="${myenv.J2EE_HOME}/lib/connector" />
+			<property name="cloud-lib" value="${myenv.J2EE_HOME}/lib/cloudscape" />
+			<property name="system-lib" value="${myenv.J2EE_HOME}/lib/system" />
+			<property name="cloudpath" value=".:${cloud-lib}/cloudclient.jar:${cloud-lib}/RmiJdbc.jar:${system-lib}/cloudutil.jar:${system-lib}/cloudscape.jar" />
+			<property name="cloud-jvmargs" value="-ms16m -mx32m -Dij.connection.CloudscapeDB=jdbc:rmi://localhost:1099/jdbc:cloudscape:CloudscapeDB;create=true -Dcloudscape.system.home=${myenv.J2EE_HOME}/cloudscape" /> 
+		    </target>
+
+
+			<target name="prepare" depends="init">
+				<mkdir dir="${build}" />
+			</target>
+
+			<target name="clean" depends="init">
+				<delete dir="${build}" />
+			</target>
+			
+			<target name="all" depends="init,ejb">
+			</target>
+
+			<target name="ejb" depends="init, mymath" > 
+			  <chmod perm="go+r" type="both">
+						<fileset dir=".." />
+			 </chmod>      		
+		   </target>
+ 
+			<target name="mymath" depends="init">
+				 <mkdir dir="${build}/${ejb}/MyMath" />
+			     <javac srcdir="${ejb}/MyMath"
+				  destdir="${build}/${ejb}/MyMath"
+				  classpath="${j2eepath}" />
+			</target>
+			
+			<target name="cart" depends="init">
+				 <mkdir dir="${build}/${ejb}/Cart" />
+			     <javac srcdir="${ejb}/Cart"
+				  destdir="${build}/${ejb}/Cart"
+				  classpath="${j2eepath}" />
+			</target>
+			
+			<target name="account" depends="init">
+				 <mkdir dir="${build}/${ejb}/SavingsAccount" />
+			     <javac srcdir="${ejb}/SavingsAccount"
+				  destdir="${build}/${ejb}/SavingsAccount"
+				  classpath="${j2eepath}" />
+			</target>
+
+			<target name="about" >
+				<echo> 
+This build.xml file contains targets for all of the J2EE Tutorial 
+examples except for the Duke's Bank Application.  The targets are
+documented along with the examples in various chapters.  The 
+Getting Started chapter, for example, instructs the reader to run
+ant converter.
+				</echo>
+			</target>
+</project>
+
